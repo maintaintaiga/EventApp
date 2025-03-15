@@ -4,22 +4,23 @@ import {
   Typography,
   TextField,
   Button,
-  Card,
-  CardContent,
   ThemeProvider,
   createTheme,
-  Grid2,
   Backdrop,
   CircularProgress,
   Divider,
   Stack,
-  Tooltip,
   Box,
+  AppBar,
+  Toolbar,
+  IconButton,
 } from "@mui/material";
-import "@fontsource/roboto";
+import "@fontsource/rubik";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import ScheduleIcon from "@mui/icons-material/Event";
+import WindowIcon from "@mui/icons-material/Window";
+import ListIcon from "@mui/icons-material/List";
 import "./App.css";
+import { EventList } from "./eventList";
 
 const theme = createTheme({
   palette: {
@@ -28,13 +29,15 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: "Roboto, Arial, sans-serif",
+    fontFamily: "Rubik, Arial, sans-serif",
+    letterSpacing: "0.02em",
   },
 });
 
 export default function App() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [list, setList] = useState(false);
 
   const [eventName, setEventName] = useState("");
   const [eventDate, setEventDate] = useState("");
@@ -71,14 +74,34 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" sx={{ p: 3, mt: 1 }} maxWidth="md">
+        <AppBar
+          sx={{
+            boxShadow: 0,
+            //  bgcolor: (theme) => theme.palette.background.default,
+          }}
+        >
+          <Toolbar>
+            <Typography variant="h3" className="header" sx={{ color: "#fff" }}>
+              <span> Event Manager</span>
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Toolbar />
         <Stack spacing={2}>
-          <Typography variant="h3" className="header">
-            <span> Event Manager</span>
-          </Typography>
           <div style={{ height: 20 }}></div>
           {/* Event Form */}
           <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <Box sx={{ p: 2, mb: 3, borderRadius: 1, width: "50%" }}>
+            <Box
+              sx={{
+                p: 2,
+                mb: 3,
+                borderRadius: 1,
+                width: { lg: "50%", md: "70%", sm: "80%" },
+              }}
+            >
+              <Typography variant="h6" sx={{ fontWeight: 800 }}>
+                Add New Event
+              </Typography>
               <TextField
                 fullWidth
                 label="Event Name"
@@ -130,70 +153,20 @@ export default function App() {
           </Box>
           <Divider sx={{ color: (theme) => theme.palette.primary }} />
           {/* Event List */}
-          <Typography variant="h5" sx={{ mb: 5 }}>
-            Upcoming Events
-          </Typography>
-          <Grid2 container spacing={2}>
-            {events
-              .sort((a, b) => {
-                return new Date(b.date) - new Date(a.date);
-              })
-              .map((event, index) => (
-                <Grid2 size={{ xs: 12, sm: 6, xl: 4 }} key={index}>
-                  <Card
-                    sx={{
-                      background:
-                        "linear-gradient(135deg, #7382BC 30%, #57679E 90%)",
-                      color: "#ffffff",
-                      borderRadius: "12px",
-                      boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.2)",
-                      overflow: "hidden",
-                      //textAlign: "center",
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        backgroundColor: "rgba(255, 255, 255, 0.2)",
-                        p: 1,
-                      }}
-                    >
-                      <ScheduleIcon />
-                      <Typography sx={{ fontWeight: "bold", ml: 1 }}>
-                        {event.date}
-                      </Typography>
-                    </Box>
-                    <CardContent>
-                      <Tooltip title={event.name}>
-                        <Typography
-                          variant="h5"
-                          sx={{ fontWeight: "bold" }}
-                          noWrap
-                          gutterBottom
-                        >
-                          {event.name}
-                        </Typography>
-                      </Tooltip>
-                      <Typography
-                        sx={{
-                          opacity: 0.8,
-                          fontStyle: "italic",
-                          fontSize: "0.9rem",
-                        }}
-                      >
-                        Donec eu turpis nulla. Aenean ut suscipit ipsum. Mauris
-                        felis velit, tempor quis augue at, fermentum rutrum
-                        sapien. Curabitur lacus nulla, tempus quis consequat at,
-                        lacinia non sapien. In mattis sapien dictum massa
-                        gravida, non egestas nibh rhoncus.
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Grid2>
-              ))}
-          </Grid2>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              mb: 1,
+            }}
+          >
+            <Typography variant="h5">Upcoming Events</Typography>
+            <IconButton onClick={() => setList((prev) => !prev)}>
+              {list ? <WindowIcon /> : <ListIcon />}
+            </IconButton>
+          </Box>
+          <EventList events={events} list={list} />
         </Stack>
       </Container>
       <Backdrop
