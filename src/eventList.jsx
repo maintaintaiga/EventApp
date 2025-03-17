@@ -9,9 +9,12 @@ import {
   ListItem,
   Divider,
   Stack,
+  CardActions,
+  Button,
 } from "@mui/material";
 
 import ScheduleIcon from "@mui/icons-material/Event";
+import { Person, PersonAdd, Place } from "@mui/icons-material";
 
 const getTime = () => {
   const date = new Date();
@@ -104,9 +107,9 @@ export const EventList = ({ events = [], list = false }) => {
               <Grid2 size={{ xs: 12, sm: 6 }} key={index}>
                 <Card
                   sx={{
-                    background:
-                      "linear-gradient(135deg, #7382BC 30%, #57679E 90%)",
-                    color: "#ffffff",
+                    //   background:
+                    //     "linear-gradient(135deg, #7382BC 30%, #57679E 90%)",
+                    // color: "#ffffff",
                     borderRadius: "12px",
                     boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.2)",
                     overflow: "hidden",
@@ -118,7 +121,8 @@ export const EventList = ({ events = [], list = false }) => {
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      backgroundColor: "rgba(255, 255, 255, 0.2)",
+                      backgroundColor: (theme) => theme.palette.primary.main,
+                      color: "#fff",
                       p: 1,
                     }}
                   >
@@ -138,6 +142,10 @@ export const EventList = ({ events = [], list = false }) => {
                         {event.name}
                       </Typography>
                     </Tooltip>
+                    <Stack direction="row">
+                      <Place size="small" />
+                      <Typography>{event?.location || "London"}</Typography>
+                    </Stack>
                     <Typography
                       sx={{
                         opacity: 0.8,
@@ -152,6 +160,17 @@ export const EventList = ({ events = [], list = false }) => {
                       non egestas nibh rhoncus.
                     </Typography>
                   </CardContent>
+                  <CardActions>
+                    <Button size="small" variant="outlined" color="primary">
+                      Manage
+                    </Button>
+                    <Button
+                      startIcon={<PersonAdd />}
+                      sx={{ textTransform: "none" }}
+                    >
+                      Invite
+                    </Button>
+                  </CardActions>
                 </Card>
               </Grid2>
             ))}

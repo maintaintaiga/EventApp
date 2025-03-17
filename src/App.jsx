@@ -14,6 +14,7 @@ import {
   AppBar,
   Toolbar,
   IconButton,
+  Grid2,
 } from "@mui/material";
 import "@fontsource/rubik";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
@@ -25,7 +26,7 @@ import { EventList } from "./eventList";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#7382BC",
+      main: "#3730b6",
     },
   },
   typography: {
@@ -77,11 +78,11 @@ export default function App() {
         <AppBar
           sx={{
             boxShadow: 0,
-            //  bgcolor: (theme) => theme.palette.background.default,
+            bgcolor: "#000",
           }}
         >
           <Toolbar>
-            <Typography variant="h3" className="header" sx={{ color: "#fff" }}>
+            <Typography variant="h4" sx={{ color: "#fff" }}>
               <span> Event Manager</span>
             </Typography>
           </Toolbar>
@@ -91,7 +92,9 @@ export default function App() {
           <div style={{ height: 20 }}></div>
           {/* Event Form */}
           <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <Box
+            <Grid2
+              container
+              spacing={2}
               sx={{
                 p: 2,
                 mb: 3,
@@ -99,59 +102,89 @@ export default function App() {
                 width: { lg: "50%", md: "70%", sm: "80%" },
               }}
             >
-              <Typography variant="h6" sx={{ fontWeight: 800 }}>
-                Add New Event
-              </Typography>
-              <TextField
-                fullWidth
-                label="Event Name"
-                value={eventName}
-                onChange={(e) => setEventName(e.target.value)}
-                sx={{ mb: 2 }}
-                helperText={
-                  nameError && (
-                    <>
-                      <ErrorOutlineIcon
-                        fontSize="small"
-                        sx={{ verticalAlign: "middle", mr: 1 }}
-                      />
-                      Event name is required.
-                    </>
-                  )
-                }
-                error={Boolean(nameError)}
-              />
-              <TextField
-                fullWidth
-                type="date"
-                value={eventDate}
-                onChange={(e) => setEventDate(e.target.value)}
-                sx={{ mb: 2 }}
-                helperText={
-                  dateError && (
-                    <>
-                      <ErrorOutlineIcon
-                        fontSize="small"
-                        sx={{ verticalAlign: "middle", mr: 1 }}
-                      />
-                      Event date is required.
-                    </>
-                  )
-                }
-                error={Boolean(dateError)}
-              />
-              <Button
-                variant="contained"
-                color="primary"
-                fullWidth
-                onClick={handleAddEvent}
-                sx={{ color: "#fff" }}
-              >
-                Add Event
-              </Button>
-            </Box>
+              <Grid2 size={{ xs: 12 }}>
+                <Typography variant="h6" sx={{ fontWeight: 800 }}>
+                  Add New Event
+                </Typography>
+              </Grid2>
+              <Grid2 size={{ xs: 12 }}>
+                <TextField
+                  fullWidth
+                  label="Event Name"
+                  value={eventName}
+                  onChange={(e) => setEventName(e.target.value)}
+                  sx={{
+                    mb: 2,
+                  }}
+                  helperText={
+                    nameError && (
+                      <>
+                        <ErrorOutlineIcon
+                          fontSize="small"
+                          sx={{ verticalAlign: "middle", mr: 1 }}
+                        />
+                        Event name is required.
+                      </>
+                    )
+                  }
+                  error={Boolean(nameError)}
+                />
+              </Grid2>
+              <Grid2 size={{ xs: 12 }}>
+                <TextField
+                  fullWidth
+                  type="date"
+                  value={eventDate}
+                  onChange={(e) => setEventDate(e.target.value)}
+                  sx={{
+                    mb: 2,
+                  }}
+                  helperText={
+                    dateError && (
+                      <>
+                        <ErrorOutlineIcon
+                          fontSize="small"
+                          sx={{ verticalAlign: "middle", mr: 1 }}
+                        />
+                        Event date is required.
+                      </>
+                    )
+                  }
+                  error={Boolean(dateError)}
+                />
+              </Grid2>
+              <Grid2>
+                <TextField type="time" />
+              </Grid2>
+              <Grid2>
+                <TextField label="location" />
+              </Grid2>
+              <Grid2 size={{ xs: 12 }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  onClick={handleAddEvent}
+                  sx={{ color: "#fff" }}
+                  size="large"
+                >
+                  Add Event
+                </Button>
+              </Grid2>
+            </Grid2>
           </Box>
-          <Divider sx={{ color: (theme) => theme.palette.primary }} />
+          <Box
+            sx={{
+              backgroundImage:
+                "radial-gradient( farthest-corner at 50px 80px,#e1dff4,#c3c0e9)",
+              position: "absolute",
+              top: 45,
+              left: 0,
+              height: 450,
+              width: "100%",
+              zIndex: -1,
+            }}
+          ></Box>
           {/* Event List */}
           <Box
             sx={{
